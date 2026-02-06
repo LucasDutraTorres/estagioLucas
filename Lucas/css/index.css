@@ -1,10 +1,52 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
 body{
     font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
+    background-color:lavender;
+}
+
+.container{
+    display: flex;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo{
+    width: 120px;
+    height: auto;
 }
 
 .btn-enter {
     text-decoration: none;
     font-family: "Quicksand", sans-serif;
+    padding: 5px 10px;
+    background-color:dodgerblue;
+    border: white;
+    border-radius: .3rem;
+    cursor: pointer;
 }
+
+h1{
+    text-align: center;
+}
+
+.elemento{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    border: 2px solid gray;
+    width: 900px;
+    height: 300px;
+    background-color: transparent;
+}
+
+
+
 

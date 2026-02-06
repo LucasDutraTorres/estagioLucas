@@ -1,0 +1,58 @@
+body{
+    background-color:lavender;
+}
+
+.logosinha{
+    width: 110px;
+    flex-direction: column;
+    align-items: end;
+    justify-content: end;
+}
+
+.cabeçalho{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid gray;
+    width: 1049px;
+    height: 100px;
+    background-color: gray;
+    gap: 50px;
+    border-radius: .3rem;
+}
+
+
+.botão{
+    padding: 15px 10px;
+    cursor: pointer;
+    border-radius: .3rem;
+    background-color:aliceblue;
+}
+
+
+.btn-Mod{
+    text-decoration: none;
+    font-family: "Quicksand", sans-serif;
+    padding: 15px 10px;
+    background-color:aliceblue;
+    color: black;
+    border: solid 2px black;
+    border-radius: .3rem;
+    cursor: pointer;
+}
+
+
+.resultados{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 5px solid gray;
+    width: 1040px;
+    height: auto;
+    min-height: 400px;
+    background-color: transparent;
+    border-radius: .3rem;
+}
+

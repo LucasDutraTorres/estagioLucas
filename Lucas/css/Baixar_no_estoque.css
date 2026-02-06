@@ -1,0 +1,10 @@
+.btn-voltar{
+    text-decoration: none;
+    font-family: "Quicksand", sans-serif;
+    padding: 15px 10px;
+    background-color:aliceblue;
+    color: black;
+    border: solid 2px black;
+    border-radius: .3rem;
+    cursor: pointer;
+}
