@@ -2,18 +2,20 @@
 error_reporting(0);
 include 'conexao.php';
 
-$id = $_POST['id'] ?? '';
+// Agora recebemos o codigodebarras enviado pelo JS
+$codigo = $_POST['codigodebarras'] ?? '';
 
-if (!empty($id)) {
-    $sql = "DELETE FROM produtos WHERE id = '$id'";
+if (!empty($codigo)) {
+    // Deletamos usando o código de barras como referência
+    $sql = "DELETE FROM produtos WHERE codigodebarras = '$codigo'";
     
     if ($conn->query($sql)) {
-        echo "Sucesso: Produto $id excluído.";
+        echo "Sucesso: Produto $codigo excluído.";
     } else {
         echo "Erro ao excluir: " . $conn->error;
     }
 } else {
-    echo "Erro: ID não recebido.";
+    echo "Erro: Código não recebido.";
 }
 
 $conn->close();

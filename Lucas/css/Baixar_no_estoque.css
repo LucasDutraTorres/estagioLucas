@@ -1,10 +1,18 @@
-.btn-voltar{
-    text-decoration: none;
-    font-family: "Quicksand", sans-serif;
-    padding: 15px 10px;
-    background-color:aliceblue;
-    color: black;
-    border: solid 2px black;
-    border-radius: .3rem;
-    cursor: pointer;
+/* Ajuste do Cabeçalho para a Logo Pequena */
+.cabeçalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 20px; /* Reduzi o padding para o cabeçalho não ficar muito alto */
+    background-color: #d32f2f;
+}
+
+/* Ajuste do Botão Voltar para não sobrepor nada */
+.container-fim {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 20px 0; /* Espaço em cima e embaixo do botão */
+    margin-top: 30px; /* Garante que ele fique longe da última linha da tabela */
+    border-top: 1px solid #eee; /* Uma linha sutil para separar da tabela */
 }
