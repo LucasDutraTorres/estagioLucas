@@ -1,11 +1,20 @@
 <?php
+error_reporting(0);
 include 'conexao.php';
-$dados = json_decode(file_get_contents('php://input'), true);
 
-if ($dados) {
-    $sql = "DELETE FROM produtos WHERE id={$dados['id']}";
-    if ($conn->query($sql)) echo json_encode(["mensagem" => "Produto excluído!"]);
-    else echo json_encode(["mensagem" => "Erro ao excluir."]);
+$id = $_POST['id'] ?? '';
+
+if (!empty($id)) {
+    $sql = "DELETE FROM produtos WHERE id = '$id'";
+    
+    if ($conn->query($sql)) {
+        echo "Sucesso: Produto $id excluído.";
+    } else {
+        echo "Erro ao excluir: " . $conn->error;
+    }
+} else {
+    echo "Erro: ID não recebido.";
 }
+
 $conn->close();
 ?>

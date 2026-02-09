@@ -154,7 +154,7 @@ function exibirProdutos() {
 window.onload = carregarProdutosParaEdicao;
 
 function carregarProdutosParaEdicao() {
-    fetch('listar_produtos.php')
+    fetch('../listar_produtos.php')
         .then(response => response.json())
         .then(data => {
             const container = document.getElementById('listaGerenciamento');
@@ -187,34 +187,53 @@ function carregarProdutosParaEdicao() {
 }
 
 function salvarAlteracao(id) {
-    const dados = {
-        id: id,
-        nome: document.getElementById(`nome-${id}`).value,
-        codigodebarras: document.getElementById(`code-${id}`).value,
-        preco: document.getElementById(`preco-${id}`).value,
-        quantidade: document.getElementById(`qtd-${id}`).value
-    };
+    // Coleta os dados dos inputs
+    const nome = document.getElementById(`nome-${id}`).value;
+    const code = document.getElementById(`code-${id}`).value;
+    const preco = document.getElementById(`preco-${id}`).value;
+    const qtd = document.getElementById(`qtd-${id}`).value;
 
-    fetch('atualizar_produto.php', {
+    // Criamos um formulário virtual para enviar
+    const formData = new FormData();
+    formData.append('id', id);
+    formData.append('nome', nome);
+    formData.append('codigodebarras', code);
+    formData.append('preco', preco);
+    formData.append('quantidade', qtd);
+
+    console.log("Tentando salvar produto ID:", id);
+
+    fetch('../atualizar_produto.php', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dados)
+        body: formData // Enviando como FormData é o jeito mais seguro
     })
-    .then(response => response.json())
-    .then(data => alert(data.mensagem));
+    .then(response => response.text())
+    .then(texto => {
+        console.log("Resposta Real do PHP:", texto);
+        if (texto.includes("Sucesso")) {
+            alert("✅ Salvo no Banco de Dados!");
+        } else {
+            alert("❌ Erro ao salvar: " + texto);
+        }
+    })
+    .catch(error => {
+        console.error('Erro de conexão:', error);
+        alert("Erro de conexão com o servidor.");
+    });
 }
 
 function excluirProduto(id) {
     if (confirm("Tem certeza que deseja excluir este produto?")) {
-        fetch('excluir_produto.php', {
+        fetch('../excluir_produto.php', { // AJUSTE O CAMINHO SE NECESSÁRIO
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: id })
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({ id: id })
         })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.mensagem);
+        .then(response => response.text())
+        .then(texto => {
+            alert("Produto excluído!");
             document.getElementById(`linha-${id}`).remove();
-        });
+        })
+        .catch(error => console.error('Erro:', error));
     }
 }
