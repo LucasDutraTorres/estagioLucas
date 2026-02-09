@@ -1,18 +1,32 @@
-/* Ajuste do Cabeçalho para a Logo Pequena */
+/**
+ * Estilos para a Página de Gerenciamento de Estoque (baixar_no_estoque.html)
+ */
+
+/* Configuração do cabeçalho com fundo vermelho */
 .cabeçalho {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 5px 20px; /* Reduzi o padding para o cabeçalho não ficar muito alto */
+    padding: 5px 20px; /* Padding reduzido para um visual mais limpo */
     background-color: #d32f2f;
 }
 
-/* Ajuste do Botão Voltar para não sobrepor nada */
+/* Container para o botão "Voltar" ao final da página */
 .container-fim {
     display: flex;
     justify-content: flex-end;
     width: 100%;
-    padding: 20px 0; /* Espaço em cima e embaixo do botão */
-    margin-top: 30px; /* Garante que ele fique longe da última linha da tabela */
-    border-top: 1px solid #eee; /* Uma linha sutil para separar da tabela */
+    padding: 20px 0; /* Espaçamento vertical */
+    margin-top: 30px; /* Distância da tabela de produtos */
+    border-top: 1px solid #eee; /* Linha divisória sutil */
+}
+
+/* Estilo para o botão voltar */
+.btn-voltar {
+    text-decoration: none;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
 }

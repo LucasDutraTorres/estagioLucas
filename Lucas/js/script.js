@@ -1,10 +1,25 @@
+/**
+ * Lógica de Front-end para Controle de Estoque
+ * 
+ * Este arquivo contém as funções que gerenciam a interatividade das páginas HTML,
+ * incluindo navegação, manipulação do DOM e comunicação com os scripts PHP via Fetch API.
+ */
+
+/**
+ * Redireciona o usuário para a página principal do sistema (pagina2.html)
+ */
 function Entrar() {
     window.location.href = "pagina2.html";
 }
 
+/**
+ * Gera e exibe dinamicamente o formulário de cadastro de produtos na área de resultados.
+ * Também configura o evento de envio (submit) para enviar os dados ao PHP.
+ */
 function exibirFormularioCadastro() {
     const area = document.getElementById('areaResultados');
     if (area) {
+        // Insere o HTML do formulário na div de resultados
         area.innerHTML = `
             <h2 style="margin-bottom: 20px;">Cadastrar Novo Produto</h2>
             <form id="formCadastro" style="display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 400px; text-align: left;">
@@ -32,9 +47,12 @@ function exibirFormularioCadastro() {
             <div id="statusCadastro" style="margin-top: 15px; font-weight: bold;"></div>
         `;
 
+        // Adiciona o ouvinte de evento para o envio do formulário
         document.getElementById('formCadastro').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(this);
+            e.preventDefault(); // Impede o recarregamento da página
+            const formData = new FormData(this); // Captura os dados do formulário
+            
+            // Envia os dados para o script PHP via POST
             fetch('cadastrar_produto.php', { method: 'POST', body: formData })
             .then(response => response.json())
             .then(data => {
@@ -42,7 +60,7 @@ function exibirFormularioCadastro() {
                 if(data.status === "sucesso") {
                     statusDiv.style.color = "green";
                     statusDiv.innerHTML = data.mensagem;
-                    this.reset();
+                    this.reset(); // Limpa o formulário em caso de sucesso
                 } else {
                     statusDiv.style.color = "red";
                     statusDiv.innerHTML = data.mensagem;
@@ -52,13 +70,18 @@ function exibirFormularioCadastro() {
     }
 }
 
+/**
+ * Busca a lista de produtos do servidor e os exibe em uma tabela.
+ * Aplica cores de destaque na quantidade baseadas no histórico salvo no localStorage.
+ */
 function exibirProdutos() {
     const area = document.getElementById('areaResultados');
     
-    // Recupera as cores do navegador
+    // Recupera as cores (verde para aumento, vermelho para diminuição) salvas no navegador
     const coresSalvas = JSON.parse(localStorage.getItem('coresEstoque') || '{}');
     console.log("Cores disponíveis para carregar:", coresSalvas);
 
+    // Faz a requisição para listar os produtos
     fetch('../listar_produtos.php')
         .then(response => response.json())
         .then(data => {
@@ -67,6 +90,7 @@ function exibirProdutos() {
                 return;
             }
 
+            // Inicia a construção da tabela HTML
             let tabela = `
                 <h2 style="margin-bottom: 20px;">Produtos em Estoque</h2>
                 <table border="1" style="width: 100%; border-collapse: collapse; text-align: left; background-color: white;">
@@ -83,10 +107,9 @@ function exibirProdutos() {
                     <tbody>
             `;
 
+            // Itera sobre cada produto retornado pelo banco
             data.forEach(p => {
-                // Tentamos buscar a cor pelo código de barras ou pelo ID (caso exista)
-                // O console mostrou que as chaves salvas são '6', '10', etc.
-                // Então vamos verificar se o código de barras do produto corresponde a alguma chave salva
+                // Define a cor da fonte para a quantidade (padrão preto se não houver histórico)
                 const cor = coresSalvas[p.codigodebarras] || 'black';
 
                 tabela += `
@@ -111,8 +134,9 @@ function exibirProdutos() {
         });
 }
 
-
-
+/**
+ * Carrega os produtos em uma tabela editável na página de gerenciamento.
+ */
 function carregarProdutosParaEdicao() {
     fetch('../listar_produtos.php')
         .then(response => response.json())
@@ -125,6 +149,7 @@ function carregarProdutosParaEdicao() {
             }
             let html = `<table border="1" style="width: 100%; border-collapse: collapse; background: white;">
                 <thead><tr><th>Nome</th><th>Código</th><th>Preço</th><th>Qtd</th><th>Ações</th></tr></thead><tbody>`;
+            
             data.forEach(p => {
                 html += `<tr id="linha-${p.codigodebarras}">
                     <td><input type="text" class="edit-input" id="nome-${p.codigodebarras}" value="${p.nome}"></td>
@@ -141,22 +166,27 @@ function carregarProdutosParaEdicao() {
         });
 }
 
+/**
+ * Coleta os novos dados de um produto editado, compara a quantidade antiga com a nova
+ * para definir uma cor de status, e envia a atualização para o servidor.
+ */
 function salvarAlteracao(codigo) {
     const nome = document.getElementById(`nome-${codigo}`).value;
     const preco = document.getElementById(`preco-${codigo}`).value;
     const inputQtd = document.getElementById(`qtd-${codigo}`);
     
     const novaQtd = parseInt(inputQtd.value);
-    // Usamos o atributo 'value' que veio do banco de dados originalmente
+    // Busca o valor original carregado (usado para comparação de estoque)
     const qtdAntiga = parseInt(inputQtd.getAttribute('value'));
 
     console.log(`Comparando: Antiga(${qtdAntiga}) vs Nova(${novaQtd})`);
 
+    // Define a cor baseado na mudança de estoque
     let corDefinida = 'black';
     if (novaQtd > qtdAntiga) {
-        corDefinida = 'green';
+        corDefinida = 'green'; // Aumentou estoque
     } else if (novaQtd < qtdAntiga) {
-        corDefinida = 'red';
+        corDefinida = 'red';   // Diminuiu estoque
     }
 
     const formData = new FormData();
@@ -165,11 +195,12 @@ function salvarAlteracao(codigo) {
     formData.append('preco', preco);
     formData.append('quantidade', novaQtd);
 
+    // Envia a atualização para o PHP
     fetch('../atualizar_produto.php', { method: 'POST', body: formData })
     .then(response => response.text())
     .then(texto => {
         if (texto.includes("Sucesso")) {
-            // Salva no localStorage
+            // Salva a preferência de cor no localStorage para persistir entre recarregamentos
             let coresEstoque = JSON.parse(localStorage.getItem('coresEstoque') || '{}');
             coresEstoque[codigo] = corDefinida;
             localStorage.setItem('coresEstoque', JSON.stringify(coresEstoque));
@@ -177,7 +208,7 @@ function salvarAlteracao(codigo) {
             console.log("Cores no LocalStorage agora:", coresEstoque);
             
             alert("✅ Alterações salvas! ");
-            // Atualiza o atributo value para futuras comparações
+            // Atualiza o atributo value para que a próxima edição compare com este novo valor
             inputQtd.setAttribute('value', novaQtd);
         } else {
             alert("❌ Erro: " + texto);
@@ -186,17 +217,20 @@ function salvarAlteracao(codigo) {
     .catch(error => console.error("Erro no fetch:", error));
 }
 
-
-
+/**
+ * Solicita confirmação e envia uma requisição para excluir o produto do banco de dados.
+ */
 function excluirProduto(codigo) {
     if (confirm("Tem certeza que deseja excluir este produto?")) {
         const formData = new FormData();
         formData.append('codigodebarras', codigo);
+        
         fetch('../excluir_produto.php', { method: 'POST', body: formData })
         .then(response => response.text())
         .then(texto => {
             if (texto.includes("Sucesso")) {
                 alert("✅ Produto excluído!");
+                // Remove a linha da tabela sem precisar recarregar a página
                 const linha = document.getElementById(`linha-${codigo}`);
                 if (linha) linha.remove();
             } else {
@@ -207,7 +241,11 @@ function excluirProduto(codigo) {
     }
 }
 
+/**
+ * Executa funções automaticamente quando a página termina de carregar.
+ */
 window.onload = () => {
+    // Se estivermos na página que contém a div de gerenciamento, carrega a lista editável
     if (document.getElementById('listaGerenciamento')) {
         carregarProdutosParaEdicao();
     }

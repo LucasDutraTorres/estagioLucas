@@ -1,14 +1,21 @@
+/**
+ * Estilos para a Página Inicial (index.html)
+ */
+
+/* Reset básico para remover margens e preenchimentos padrão do navegador */
 *{
     margin: 0;
     padding: 0;
 }
 
+/* Configuração do corpo da página: fonte e cor de fundo */
 body{
     font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
-    background-color:lavender;
+    background-color: lavender;
 }
 
+/* Container flexível para centralizar o conteúdo na tela inteira */
 .container{
     display: flex;
     height: 100vh;
@@ -16,27 +23,32 @@ body{
     justify-content: center;
 }
 
+/* Estilo para o logotipo */
 .logo{
     width: 120px;
     height: auto;
 }
 
+/* Estilo para o botão de entrada ("Entrar") */
 .btn-enter {
     text-decoration: none;
     font-family: "Quicksand", sans-serif;
     padding: 5px 10px;
-    background-color:dodgerblue;
+    background-color: dodgerblue;
     border: white;
     border-radius: .3rem;
     cursor: pointer;
+    color: white; /* Adicionado para melhor legibilidade */
 }
 
+/* Centralização do título principal */
 h1{
     text-align: center;
 }
 
+/* Caixa principal (elemento) que contém a logo, título e botão */
 .elemento{
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -45,8 +57,5 @@ h1{
     width: 900px;
     height: 300px;
     background-color: transparent;
+    border-radius: 8px; /* Adicionado para suavizar as bordas */
 }
-
-
-
-

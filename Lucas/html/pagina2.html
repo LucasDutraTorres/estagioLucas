@@ -1,27 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Controle de Estoque</title>
+    <title>Painel de Controle de Estoque</title>
+    
+    <!-- Estilos específicos para o painel principal -->
     <link rel="stylesheet" href="../css/pagina2.css">
 </head>
 <body>
     <div class="painel">
+        <!-- Barra superior com botões de navegação e ações -->
         <div class="cabeçalho">
+            <!-- Botão para ver o total de produtos cadastrados -->
             <button class="botão" onclick="exibirQuantidade()">Quantidade de Produtos</button>
+            
+            <!-- Botão para abrir o formulário de cadastro (função no script.js) -->
             <button class="botão" onclick="exibirFormularioCadastro()" >Cadastrar Produto</button>
+            
+            <!-- Botão para listar todos os produtos em uma tabela -->
             <button class="botão" onclick="exibirProdutos()">Exibir Produtos</button>
+            
+            <!-- Link para a página de gerenciamento (edição/exclusão) -->
             <a href="baixar_no_estoque.html" class="btn-Mod">Baixar no Estoque</a>
+            
+            <!-- Link para voltar à tela inicial -->
             <a href="index.html" class="btn-Mod">Sair</a>
-            <img src="https://arrudaalimentos.com.br/wp-content/uploads/2021/05/Arruda2021-1200x526.png" alt="erro" class="logosinha">
+            
+            <!-- Logo da empresa no cabeçalho -->
+            <img src="https://arrudaalimentos.com.br/wp-content/uploads/2021/05/Arruda2021-1200x526.png" alt="Logo Arruda" class="logosinha">
         </div>
+
+        <!-- Área onde os conteúdos dinâmicos (tabelas, formulários, avisos) serão injetados pelo JS -->
         <div id="areaResultados" class="resultados">
-             
-
+             <!-- O conteúdo aqui muda conforme os botões clicados -->
         </div>
-
     </div>
+
+    <!-- Script principal que gerencia as ações dos botões -->
     <script src="../js/script.js"></script>
+
+    <script>
+        /**
+         * Função específica para esta página que busca o total de produtos no servidor
+         * e exibe um alerta para o usuário.
+         */
+        function exibirQuantidade() {
+            fetch('../contar_produtos.php')
+                .then(response => response.json())
+                .then(data => {
+                    alert("Total de produtos cadastrados: " + data.total);
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert("Erro ao consultar a quantidade.");
+                });
+        }
+    </script>
 </body>
 </html>

@@ -1,16 +1,20 @@
+/**
+ * Estilos para o Painel Principal (pagina2.html)
+ */
+
 body{
-    background-color:lavender;
+    background-color: lavender;
 }
 
+/* Estilo para a logo pequena no cabeçalho */
 .logosinha{
     width: 110px;
-    flex-direction: column;
-    align-items: end;
-    justify-content: end;
+    /* Nota: flex-direction e align-items aqui não têm efeito sem display:flex */
 }
 
+/* Barra de ferramentas/cabeçalho superior */
 .cabeçalho{
-    display:flex;
+    display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -22,29 +26,30 @@ body{
     border-radius: .3rem;
 }
 
-
+/* Estilo padrão para os botões de ação */
 .botão{
     padding: 15px 10px;
     cursor: pointer;
     border-radius: .3rem;
-    background-color:aliceblue;
+    background-color: aliceblue;
+    border: 1px solid #ccc;
 }
 
-
+/* Estilo para botões de modificação/links que parecem botões */
 .btn-Mod{
     text-decoration: none;
     font-family: "Quicksand", sans-serif;
     padding: 15px 10px;
-    background-color:aliceblue;
+    background-color: aliceblue;
     color: black;
     border: solid 2px black;
     border-radius: .3rem;
     cursor: pointer;
 }
 
-
+/* Área de exibição de resultados (tabelas e formulários dinâmicos) */
 .resultados{
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -54,5 +59,5 @@ body{
     min-height: 400px;
     background-color: transparent;
     border-radius: .3rem;
+    padding: 20px; /* Adicionado para não grudar o conteúdo nas bordas */
 }
-

@@ -3,31 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Gerenciar Estoque - Arruda</title>
+    
+    <!-- Estilos base para esta página -->
     <link rel="stylesheet" href="../css/Baixar_no_estoque.css"> 
+    
+    <!-- Estilos internos para componentes de edição da tabela -->
     <style>
+        /* Estilo para os campos de input dentro da tabela */
         .edit-input { width: 90%; padding: 5px; border: 1px solid #ccc; border-radius: 3px; }
+        
+        /* Estilo para o botão de salvar alterações */
         .btn-salvar { background-color: #4CAF50; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; margin-right: 5px; }
+        
+        /* Estilo para o botão de excluir produto */
         .btn-excluir { background-color: #f44336; color: white; border: none; padding: 5px 10px; cursor: pointer; border-radius: 3px; }
+        
+        /* Configuração da barra superior */
         .cabeçalho { display: flex; justify-content: space-between; align-items: center; padding: 5px 20px; background-color: #d32f2f; }
+        
+        /* Alinhamento do botão de voltar ao final da página */
         .container-fim { display: flex; justify-content: flex-end; width: 100%; padding: 20px 0; margin-top: 20px; }
     </style>
 </head>
 <body>
     <div class="painel">
+        <!-- Cabeçalho da página de gerenciamento -->
         <div class="cabeçalho">
             <h1 style="color: white; font-size: 20px;">Gerenciamento de Produtos</h1>
             <img src="https://arrudaalimentos.com.br/wp-content/uploads/2021/05/Arruda2021-1200x526.png" alt="logo" style="height: 40px !important; width: auto !important;">
         </div>
+
+        <!-- Área principal de conteúdo -->
         <div class="resultados" style="height: auto; min-height: 500px; display: flex; flex-direction: column;">
             <h2>Editar ou Excluir Itens</h2>
+            
+            <!-- Div onde a tabela de produtos será carregada via script.js -->
             <div id="listaGerenciamento" style="width: 100%;">
                 <p>Carregando produtos...</p>
             </div>
+
+            <!-- Botão para retornar ao painel principal -->
             <div class="container-fim">
                 <a href="pagina2.html" class="btn-voltar">Voltar</a>
             </div>
         </div>
     </div>
+
+    <!-- Script que contém a função carregarProdutosParaEdicao() executada no onload -->
     <script src="../js/script.js"></script>
 </body>
 </html>
