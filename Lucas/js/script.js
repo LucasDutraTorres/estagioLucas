@@ -13,6 +13,42 @@ function Entrar() {
 }
 
 /**
+ * Busca o total de produtos no servidor e exibe um resumo estatístico
+ * na área de resultados.
+ */
+function exibirQuantidade() {
+    const area = document.getElementById('areaResultados');
+    if (!area) return;
+
+    area.innerHTML = "<p>Consultando...</p>";
+    
+    // Busca o total de produtos no arquivo PHP
+    fetch('../contar_produtos.php')
+        .then(response => {
+            if (!response.ok) throw new Error('Arquivo PHP não encontrado');
+            return response.text(); 
+        })
+        .then(texto => {
+            try {
+                const data = JSON.parse(texto); 
+                area.innerHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <h2>Status do Inventário</h2>
+                        <p style="font-size: 24px;">Existem <b>${data.total}</b> itens registrados.</p>
+                    </div>
+                `;
+            } catch (e) {
+                console.error("Erro ao converter JSON:", e, "Texto recebido:", texto);
+                area.innerHTML = "<p>Erro na leitura dos dados. Verifique o Console (F12).</p>";
+            }
+        })
+        .catch(error => {
+            console.error('Erro de conexão:', error);
+            area.innerHTML = "<p>Erro ao conectar com o servidor.</p>";
+        });
+}
+
+/**
  * Gera e exibe dinamicamente o formulário de cadastro de produtos na área de resultados.
  * Também configura o evento de envio (submit) para enviar os dados ao PHP.
  */
